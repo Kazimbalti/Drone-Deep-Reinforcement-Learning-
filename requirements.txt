@@ -1,0 +1,6 @@
+matplotlib==2.2.3
+numpy==1.15.1
+pandas==0.23.4
+jupyter==1.0.0
+keras==2.2.2
+imageio==2.4.1
