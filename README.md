@@ -9,7 +9,7 @@ Deep Reinforcement Learning Project developed for Udacity's Deep Learning Nanode
 Clone the repository:
 
 ``` batch
-git clone https://github.com/craig-martinson/quadcopter-project.git
+git clone https://github.com/Kazimbalti/Drone-Deep-Reinforcement-Learning-.git
 cd quadcopter-project
 ```
 
