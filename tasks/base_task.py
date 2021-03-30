@@ -24,57 +24,12 @@ class Task():
         self.action_size = 4
 
         # Goal
-        self.target_pos = target_pos if target_pos is not None else np.array([0., 0., 0.]) 
- 
+        self.target_pos = target_pos if target_pos is not None else np.array([0., 0., 10.]) 
+
     def get_reward(self):
         """Uses current pose of sim to return reward."""
-        
-        # Calculate distance from target
-        dist_from_target = np.sqrt(np.square(self.sim.pose[:3] - self.target_pos).sum())
-        #dist_from_target_squared = np.square(self.sim.pose[:3] - self.target_pos).sum()
-
-        # Calculate distance from vertical axis
-        #dist_from_axis = np.sqrt(np.square(self.sim.pose[:2] - self.target_pos[:2]).sum())
-
-        # Calculate angular deviation
-        angular_deviation = np.sqrt(np.square(self.sim.pose[3:]).sum())
-        
-        # Calculate velocity in xy plane
-        #non_z_v = np.square(self.sim.v[:2]).sum()
-
-        # Calculate overall velocity
-        #vel = np.square(self.sim.v[:3]).sum()
-
-        penalty = 0.004 * dist_from_target * dist_from_target
-        #penalty = 0.015 * dist_from_target_squared
-
-        # Penalty based on angular deviation to encourage the quadcopter to remain upright
-        penalty += 0.008 * angular_deviation
-
-        # Penalty based on movement in the xy plane to encourage the quadcopter to fly vertically
-        #if dist_from_axis > 4:
-        #   penalty += 0.1
-
-        # Penalty for high velocity to encourage quadcopter to fly slower
-        #if vel > 10.0:
-        #   penalty += 0.1
-
-        #if self.sim.pose[2] > self.target_pos[2] + 5:
-        #    penalty += 0.01
-
-        bonus = 1.0
-        #if dist_from_target < 0.5:
-        #    bonus += 0.01
-            
-        # Calculate reward
-        reward = bonus - penalty
-        # Reward for time to encourage quadcopter to remain in the air
-        #reward += 0.001 * self.sim.time
-
-        # clamp reward to [-1, 1]
-        #return min(1.0, max(-1.0, reward))
-        return np.tanh(reward)
-
+        reward = 1.-.3*(abs(self.sim.pose[:3] - self.target_pos)).sum()
+        return reward
 
     def step(self, rotor_speeds):
         """Uses action to obtain next state, reward, done."""
